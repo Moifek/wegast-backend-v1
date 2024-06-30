@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "singularName": "payment",
+    "pluralName": "payments",
+    "displayName": "payment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "paymentID": {
+      "type": "uid",
+      "required": true
+    },
+    "isFinalized": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order",
+      "private": true,
+      "inversedBy": "payment"
+    },
+    "paymentAmmount": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}

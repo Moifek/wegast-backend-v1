@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Discount": {
+      "type": "integer"
+    },
+    "TotalPrice": {
+      "type": "decimal",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "Currency": {
+      "type": "enumeration",
+      "enum": [
+        "TND",
+        "EUR",
+        "USD"
+      ],
+      "default": "TND",
+      "required": true
+    },
+    "OrderStatus": {
+      "type": "enumeration",
+      "enum": [
+        "initialized",
+        "orderPlaced",
+        "inProgress",
+        "onRoute",
+        "finalized"
+      ],
+      "required": true,
+      "default": "initialized"
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment",
+      "mappedBy": "order"
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::restaurant.restaurant",
+      "inversedBy": "order"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "order"
+    },
+    "OrderItems": {
+      "displayName": "OrderItems",
+      "type": "component",
+      "repeatable": true,
+      "component": "order-items.order-items"
+    },
+    "discount_code": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discount-code.discount-code",
+      "inversedBy": "order"
+    }
+  }
+}

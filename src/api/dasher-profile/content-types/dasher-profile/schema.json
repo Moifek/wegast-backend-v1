@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dasher_profiles",
+  "info": {
+    "singularName": "dasher-profile",
+    "pluralName": "dasher-profiles",
+    "displayName": "DasherProfile"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "DisplayName": {
+      "type": "string"
+    },
+    "DistanceTraveled": {
+      "type": "float",
+      "default": 1,
+      "required": true,
+      "min": 1
+    },
+    "payPerDistance": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "ProfilePicture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "dasher_profile"
+    }
+  }
+}

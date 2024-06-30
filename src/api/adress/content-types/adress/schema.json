@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adresses",
+  "info": {
+    "singularName": "adress",
+    "pluralName": "adresses",
+    "displayName": "Adress"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "StreetAdress": {
+      "type": "string"
+    },
+    "Latitude": {
+      "type": "string"
+    },
+    "Longtitude": {
+      "type": "string"
+    },
+    "AreaCode": {
+      "type": "string"
+    },
+    "Type": {
+      "type": "string"
+    }
+  }
+}

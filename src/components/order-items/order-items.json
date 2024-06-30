@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_order_items_order_items",
+  "info": {
+    "displayName": "OrderItems",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "item": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::item.item"
+    },
+    "Quantity": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "Price": {
+      "type": "integer",
+      "min": 1,
+      "required": true,
+      "default": 1
+    },
+    "Comment": {
+      "type": "string"
+    }
+  }
+}

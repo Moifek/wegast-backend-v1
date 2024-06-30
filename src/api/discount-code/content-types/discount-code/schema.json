@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "discount_codes",
+  "info": {
+    "singularName": "discount-code",
+    "pluralName": "discount-codes",
+    "displayName": "DiscountCode"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Ammount": {
+      "type": "integer"
+    },
+    "ExpiresBy": {
+      "type": "date"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order",
+      "mappedBy": "discount_code"
+    }
+  }
+}

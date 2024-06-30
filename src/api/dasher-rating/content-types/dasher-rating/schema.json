@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dasher_ratings",
+  "info": {
+    "singularName": "dasher-rating",
+    "pluralName": "dasher-ratings",
+    "displayName": "DasherRating",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Rating": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "default": 1,
+      "required": true
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "dasher_rating"
+    },
+    "Comment": {
+      "type": "richtext"
+    }
+  }
+}

@@ -724,6 +724,21 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    order: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::order.order'
+    >;
+    dasher_profile: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::dasher-profile.dasher-profile'
+    >;
+    dasher_rating: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::dasher-rating.dasher-rating'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -788,6 +803,414 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAdressAdress extends Schema.CollectionType {
+  collectionName: 'adresses';
+  info: {
+    singularName: 'adress';
+    pluralName: 'adresses';
+    displayName: 'Adress';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    StreetAdress: Attribute.String;
+    Latitude: Attribute.String;
+    Longtitude: Attribute.String;
+    AreaCode: Attribute.String;
+    Type: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::adress.adress',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::adress.adress',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDasherProfileDasherProfile extends Schema.CollectionType {
+  collectionName: 'dasher_profiles';
+  info: {
+    singularName: 'dasher-profile';
+    pluralName: 'dasher-profiles';
+    displayName: 'DasherProfile';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    DisplayName: Attribute.String;
+    DistanceTraveled: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    payPerDistance: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    isActive: Attribute.Boolean;
+    ProfilePicture: Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::dasher-profile.dasher-profile',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dasher-profile.dasher-profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dasher-profile.dasher-profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDasherRatingDasherRating extends Schema.CollectionType {
+  collectionName: 'dasher_ratings';
+  info: {
+    singularName: 'dasher-rating';
+    pluralName: 'dasher-ratings';
+    displayName: 'DasherRating';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Rating: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 5;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    users_permissions_users: Attribute.Relation<
+      'api::dasher-rating.dasher-rating',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    Comment: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dasher-rating.dasher-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dasher-rating.dasher-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDiscountCodeDiscountCode extends Schema.CollectionType {
+  collectionName: 'discount_codes';
+  info: {
+    singularName: 'discount-code';
+    pluralName: 'discount-codes';
+    displayName: 'DiscountCode';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Ammount: Attribute.Integer;
+    ExpiresBy: Attribute.Date;
+    isActive: Attribute.Boolean;
+    order: Attribute.Relation<
+      'api::discount-code.discount-code',
+      'oneToOne',
+      'api::order.order'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::discount-code.discount-code',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::discount-code.discount-code',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItemItem extends Schema.CollectionType {
+  collectionName: 'items';
+  info: {
+    singularName: 'item';
+    pluralName: 'items';
+    displayName: 'Item';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Image: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    item_category: Attribute.Relation<
+      'api::item.item',
+      'oneToOne',
+      'api::item-category.item-category'
+    >;
+    restaurant: Attribute.Relation<
+      'api::item.item',
+      'oneToOne',
+      'api::restaurant.restaurant'
+    >;
+    Description: Attribute.Blocks;
+    Price: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItemCategoryItemCategory extends Schema.CollectionType {
+  collectionName: 'item_categories';
+  info: {
+    singularName: 'item-category';
+    pluralName: 'item-categories';
+    displayName: 'ItemCategory';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String & Attribute.Required;
+    item: Attribute.Relation<
+      'api::item-category.item-category',
+      'oneToOne',
+      'api::item.item'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::item-category.item-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::item-category.item-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Discount: Attribute.Integer;
+    TotalPrice: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<1>;
+    Currency: Attribute.Enumeration<['TND', 'EUR', 'USD']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'TND'>;
+    OrderStatus: Attribute.Enumeration<
+      ['initialized', 'orderPlaced', 'inProgress', 'onRoute', 'finalized']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'initialized'>;
+    payment: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'api::payment.payment'
+    >;
+    restaurant: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'api::restaurant.restaurant'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::order.order',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    OrderItems: Attribute.Component<'order-items.order-items', true>;
+    discount_code: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'api::discount-code.discount-code'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaymentPayment extends Schema.CollectionType {
+  collectionName: 'payments';
+  info: {
+    singularName: 'payment';
+    pluralName: 'payments';
+    displayName: 'payment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    paymentID: Attribute.UID & Attribute.Required;
+    isFinalized: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<false>;
+    order: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'api::order.order'
+    > &
+      Attribute.Private;
+    paymentAmmount: Attribute.Integer & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRestaurantRestaurant extends Schema.CollectionType {
+  collectionName: 'restaurants';
+  info: {
+    singularName: 'restaurant';
+    pluralName: 'restaurants';
+    displayName: 'Restaurant';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String & Attribute.Required & Attribute.Unique;
+    Email: Attribute.Email & Attribute.Unique;
+    PhoneNumber: Attribute.Integer & Attribute.Required & Attribute.Unique;
+    item: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToOne',
+      'api::item.item'
+    >;
+    order: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToOne',
+      'api::order.order'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -806,6 +1229,15 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::adress.adress': ApiAdressAdress;
+      'api::dasher-profile.dasher-profile': ApiDasherProfileDasherProfile;
+      'api::dasher-rating.dasher-rating': ApiDasherRatingDasherRating;
+      'api::discount-code.discount-code': ApiDiscountCodeDiscountCode;
+      'api::item.item': ApiItemItem;
+      'api::item-category.item-category': ApiItemCategoryItemCategory;
+      'api::order.order': ApiOrderOrder;
+      'api::payment.payment': ApiPaymentPayment;
+      'api::restaurant.restaurant': ApiRestaurantRestaurant;
     }
   }
 }
