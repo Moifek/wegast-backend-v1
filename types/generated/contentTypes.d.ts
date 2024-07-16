@@ -695,7 +695,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -724,11 +723,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    order: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'manyToOne',
-      'api::order.order'
-    >;
     dasher_profile: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToOne',
@@ -738,6 +732,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'api::dasher-rating.dasher-rating'
+    >;
+    orders: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::order.order'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1098,16 +1097,17 @@ export interface ApiOrderOrder extends Schema.CollectionType {
       'oneToOne',
       'api::restaurant.restaurant'
     >;
-    users_permissions_users: Attribute.Relation<
-      'api::order.order',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
     OrderItems: Attribute.Component<'order-items.order-items', true>;
     discount_code: Attribute.Relation<
       'api::order.order',
       'oneToOne',
       'api::discount-code.discount-code'
+    >;
+    uuid: Attribute.UID;
+    users_permissions_user: Attribute.Relation<
+      'api::order.order',
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

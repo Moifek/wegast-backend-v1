@@ -55,12 +55,6 @@
       "target": "api::restaurant.restaurant",
       "inversedBy": "order"
     },
-    "users_permissions_users": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "order"
-    },
     "OrderItems": {
       "displayName": "OrderItems",
       "type": "component",
@@ -72,6 +66,16 @@
       "relation": "oneToOne",
       "target": "api::discount-code.discount-code",
       "inversedBy": "order"
+    },
+    "uuid": {
+      "type": "uid",
+      "required": false
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
     }
   }
 }
