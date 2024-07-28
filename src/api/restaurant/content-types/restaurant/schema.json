@@ -37,6 +37,17 @@
       "relation": "oneToOne",
       "target": "api::order.order",
       "mappedBy": "restaurant"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }
