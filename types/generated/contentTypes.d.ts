@@ -842,6 +842,7 @@ export interface ApiDasherProfileDasherProfile extends Schema.CollectionType {
     singularName: 'dasher-profile';
     pluralName: 'dasher-profiles';
     displayName: 'DasherProfile';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -876,6 +877,12 @@ export interface ApiDasherProfileDasherProfile extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    orders: Attribute.Relation<
+      'api::dasher-profile.dasher-profile',
+      'oneToMany',
+      'api::order.order'
+    >;
+    Balance: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -992,14 +999,9 @@ export interface ApiItemItem extends Schema.CollectionType {
   attributes: {
     Name: Attribute.String;
     Image: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
-    item_category: Attribute.Relation<
-      'api::item.item',
-      'oneToOne',
-      'api::item-category.item-category'
-    >;
     restaurant: Attribute.Relation<
       'api::item.item',
-      'oneToOne',
+      'manyToOne',
       'api::restaurant.restaurant'
     >;
     Description: Attribute.Blocks;
@@ -1012,6 +1014,11 @@ export interface ApiItemItem extends Schema.CollectionType {
         number
       > &
       Attribute.DefaultTo<1>;
+    item_category: Attribute.Relation<
+      'api::item.item',
+      'manyToOne',
+      'api::item-category.item-category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1028,15 +1035,16 @@ export interface ApiItemCategoryItemCategory extends Schema.CollectionType {
     singularName: 'item-category';
     pluralName: 'item-categories';
     displayName: 'ItemCategory';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     Name: Attribute.String & Attribute.Required;
-    item: Attribute.Relation<
+    items: Attribute.Relation<
       'api::item-category.item-category',
-      'oneToOne',
+      'oneToMany',
       'api::item.item'
     >;
     createdAt: Attribute.DateTime;
@@ -1094,7 +1102,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     >;
     restaurant: Attribute.Relation<
       'api::order.order',
-      'oneToOne',
+      'manyToOne',
       'api::restaurant.restaurant'
     >;
     OrderItems: Attribute.Component<'order-items.order-items', true>;
@@ -1103,11 +1111,15 @@ export interface ApiOrderOrder extends Schema.CollectionType {
       'oneToOne',
       'api::discount-code.discount-code'
     >;
-    uuid: Attribute.UID;
     users_permissions_user: Attribute.Relation<
       'api::order.order',
       'manyToOne',
       'plugin::users-permissions.user'
+    >;
+    dasher_profile: Attribute.Relation<
+      'api::order.order',
+      'manyToOne',
+      'api::dasher-profile.dasher-profile'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1183,18 +1195,18 @@ export interface ApiRestaurantRestaurant extends Schema.CollectionType {
     Name: Attribute.String & Attribute.Required & Attribute.Unique;
     Email: Attribute.Email & Attribute.Unique;
     PhoneNumber: Attribute.Integer & Attribute.Required & Attribute.Unique;
-    item: Attribute.Relation<
-      'api::restaurant.restaurant',
-      'oneToOne',
-      'api::item.item'
-    >;
-    order: Attribute.Relation<
-      'api::restaurant.restaurant',
-      'oneToOne',
-      'api::order.order'
-    >;
     Image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Attribute.Required;
+    orders: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToMany',
+      'api::order.order'
+    >;
+    items: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'oneToMany',
+      'api::item.item'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

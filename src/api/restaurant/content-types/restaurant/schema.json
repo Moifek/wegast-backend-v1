@@ -26,18 +26,6 @@
       "required": true,
       "type": "integer"
     },
-    "item": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::item.item",
-      "mappedBy": "restaurant"
-    },
-    "order": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::order.order",
-      "mappedBy": "restaurant"
-    },
     "Image": {
       "type": "media",
       "multiple": false,
@@ -48,6 +36,18 @@
         "videos",
         "audios"
       ]
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "restaurant"
+    },
+    "items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::item.item",
+      "mappedBy": "restaurant"
     }
   }
 }

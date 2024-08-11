@@ -4,7 +4,8 @@
   "info": {
     "singularName": "dasher-profile",
     "pluralName": "dasher-profiles",
-    "displayName": "DasherProfile"
+    "displayName": "DasherProfile",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -30,20 +31,30 @@
       "type": "boolean"
     },
     "ProfilePicture": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "dasher_profile"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "dasher_profile"
+    },
+    "Balance": {
+      "type": "integer"
     }
   }
 }

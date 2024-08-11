@@ -26,17 +26,11 @@
         "audios"
       ]
     },
-    "item_category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::item-category.item-category",
-      "inversedBy": "item"
-    },
     "restaurant": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::restaurant.restaurant",
-      "inversedBy": "item"
+      "inversedBy": "items"
     },
     "Description": {
       "type": "blocks"
@@ -46,6 +40,12 @@
       "required": true,
       "min": 1,
       "default": 1
+    },
+    "item_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::item-category.item-category",
+      "inversedBy": "items"
     }
   }
 }

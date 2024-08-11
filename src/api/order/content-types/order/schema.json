@@ -51,9 +51,9 @@
     },
     "restaurant": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::restaurant.restaurant",
-      "inversedBy": "order"
+      "inversedBy": "orders"
     },
     "OrderItems": {
       "displayName": "OrderItems",
@@ -67,14 +67,16 @@
       "target": "api::discount-code.discount-code",
       "inversedBy": "order"
     },
-    "uuid": {
-      "type": "uid",
-      "required": false
-    },
     "users_permissions_user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
+    },
+    "dasher_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dasher-profile.dasher-profile",
       "inversedBy": "orders"
     }
   }
