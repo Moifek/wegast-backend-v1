@@ -48,6 +48,9 @@
       "relation": "oneToMany",
       "target": "api::item.item",
       "mappedBy": "restaurant"
+    },
+    "Recommender": {
+      "type": "boolean"
     }
   }
 }

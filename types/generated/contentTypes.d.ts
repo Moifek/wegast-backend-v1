@@ -785,6 +785,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::order.order'
     >;
+    AppRole: Attribute.Enumeration<['client', 'dasher']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1207,6 +1208,7 @@ export interface ApiRestaurantRestaurant extends Schema.CollectionType {
       'oneToMany',
       'api::item.item'
     >;
+    Recommender: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
