@@ -786,6 +786,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'api::order.order'
     >;
     AppRole: Attribute.Enumeration<['client', 'dasher']>;
+    adress: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::adress.adress'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
