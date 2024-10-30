@@ -1053,6 +1053,11 @@ export interface ApiItemCategoryItemCategory extends Schema.CollectionType {
       'oneToMany',
       'api::item.item'
     >;
+    restaurants: Attribute.Relation<
+      'api::item-category.item-category',
+      'oneToMany',
+      'api::restaurant.restaurant'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1214,6 +1219,11 @@ export interface ApiRestaurantRestaurant extends Schema.CollectionType {
       'api::item.item'
     >;
     Recommender: Attribute.Boolean;
+    item_category: Attribute.Relation<
+      'api::restaurant.restaurant',
+      'manyToOne',
+      'api::item-category.item-category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

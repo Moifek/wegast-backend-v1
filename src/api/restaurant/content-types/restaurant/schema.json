@@ -51,6 +51,12 @@
     },
     "Recommender": {
       "type": "boolean"
+    },
+    "item_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::item-category.item-category",
+      "inversedBy": "restaurants"
     }
   }
 }
