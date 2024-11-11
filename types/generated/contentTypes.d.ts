@@ -1055,7 +1055,7 @@ export interface ApiItemCategoryItemCategory extends Schema.CollectionType {
     >;
     restaurants: Attribute.Relation<
       'api::item-category.item-category',
-      'oneToMany',
+      'manyToMany',
       'api::restaurant.restaurant'
     >;
     createdAt: Attribute.DateTime;
@@ -1219,9 +1219,9 @@ export interface ApiRestaurantRestaurant extends Schema.CollectionType {
       'api::item.item'
     >;
     Recommender: Attribute.Boolean;
-    item_category: Attribute.Relation<
+    item_categories: Attribute.Relation<
       'api::restaurant.restaurant',
-      'manyToOne',
+      'manyToMany',
       'api::item-category.item-category'
     >;
     createdAt: Attribute.DateTime;
