@@ -814,16 +814,22 @@ export interface ApiAdressAdress extends Schema.CollectionType {
     singularName: 'adress';
     pluralName: 'adresses';
     displayName: 'Adress';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    StreetAdress: Attribute.String;
+    StreetAdress: Attribute.String & Attribute.Required;
     Latitude: Attribute.String;
     Longtitude: Attribute.String;
     AreaCode: Attribute.String;
     Type: Attribute.String;
+    User: Attribute.Relation<
+      'api::adress.adress',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
