@@ -57,6 +57,13 @@
       "relation": "manyToMany",
       "target": "api::item-category.item-category",
       "inversedBy": "restaurants"
+    },
+    "DeliveryFee": {
+      "type": "integer",
+      "unique": false,
+      "required": true,
+      "min": 1,
+      "default": 1
     }
   }
 }
