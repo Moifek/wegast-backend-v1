@@ -71,25 +71,29 @@ module.exports = createCoreController('api::order.order', ({ strapi }) => ({
     }
 },
 async takeOrder(ctx) {
-  const { id, dasherId } = ctx.request.body;
+  const { id, userId } = ctx.request.body;
 
   const res = await strapi.service('api::order.order').findOne(id);
   if(res.OrderStatus === "orderPlaced"){
    
   res.OrderStatus = "inProgress";
-  res.dasher_profile = dasherId;
-
-  const order = await strapi.entityService.update('api::order.order', id, { data: res }); 
-  ctx.send({ message: 'order assigned', order },201);  
+  const user = await strapi.entityService.findOne('plugin::users-permissions.user', userId , {
+    populate: { dasher_profile: true }
+  });
+  
+  const order = await strapi.entityService.update('api::order.order', id, { data: { ...res, dasher_profile: user.dasher_profile } }); 
+  ctx.send({ message: 'order assigned', order }, 200);  
   }else{
-    ctx.send({ message: 'order already took' },400);
+    ctx.send({ message: 'order already took' }, 400);
       return { ctx };
   }
 },
 async finalizeOrder(ctx) {
   const { id, dasherId } = ctx.request.body;
-
   const res = await strapi.service('api::order.order').findOne(id);
+  if(!res){
+    return ctx.send({ message: 'order not found' }, 404);
+  }
   if(res.OrderStatus === "inProgress" || res.OrderStatus === "onRoute"){
     
     const order = await strapi.service('api::order.order').findOne(id);
@@ -100,7 +104,7 @@ async finalizeOrder(ctx) {
     }
   await strapi.entityService.update('api::order.order', id, { data: res }); 
   await strapi.entityService.update('api::dasher-profile.dasher-profile', dasherId, { data: dasher }); 
-  ctx.send({ message: 'order placed' },201);  
+  ctx.send({ message: 'order finalized' },201);  
   }else{
       ctx.send({ message: 'order already finalized' },400);
       return { ctx };

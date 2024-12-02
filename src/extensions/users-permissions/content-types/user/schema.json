@@ -94,6 +94,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::adress.adress"
+    },
+    "PhoneNumber": {
+      "type": "integer",
+      "max": 99999999,
+      "required": true,
+      "min": 20000000,
+      "unique": true
     }
   }
 }

@@ -13,7 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "Discount": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0,
+      "min": 0
     },
     "TotalPrice": {
       "type": "decimal",
